@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teste Imóvel Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #fff;
+      color: #1B2653;
+    }
+
+    header {
+      background-color: #1B2653;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .linha-topo {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .box {
+      background: #f2f2f2;
+      padding: 20px;
+      width: 30%;
+      min-width: 250px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .box input, .box select, .box button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .box button {
+      background: #FE6613;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 30%;
+      min-width: 250px;
+      text-align: center;
+      position: relative;
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .card button {
+      margin-top: 10px;
+      background: #FE6613;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #1B2653;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 90%;
+      max-height: 80%;
+      overflow: auto;
+      text-align: center;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .modal-close {
+      background: #FE6613;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+
+    
+    @keyframes zoomIn {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .zoom-on-load {
+      animation: zoomIn 0.8s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <img src="logo.png" alt="Imóvel Guide" height="40">
+    </div>
+    <nav>
+      <a href="#">Condomínios</a>
+      <a href="#">Regiões</a>
+      <a href="#">Dicas</a>
+      <a href="#">Artigos</a>
+      <a href="#">Ferramentas</a>
+    </nav>
+    <button style="background:#FE6613;color:white;border:none;padding:10px 20px;border-radius:5px;">Cadastrar</button>
+  </header>
+
+  <main>
+    <div class="linha-topo">
+      <div class="box">
+        <div>
+          <img src="imagens/corretor1.jfif" alt="Usuário 1" style="width:100%; border-radius: 8px;" class="zoom-on-load">
+          <p>Gabriela Silva</p>
+        </div>
+        <div>
+          <img src="imagens/rosto2.jfif" alt="Usuário 2" style="width:100%; border-radius: 8px;" class="zoom-on-load">
+          <p>Lucia Castro</p>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3>Mande uma mensagem:</h3>
+        <input type="text" placeholder="Digite seu CPF" id="cpfInput">
+        <input type="text" placeholder="Digite seu Telefone" id="telInput">
+        <select>
+          <option value="">Digite sua seleção</option>
+          <option value="1">Opção 1</option>
+          <option value="2">Opção 2</option>
+        </select>
+        <input type="text" placeholder="Digite a mensagem">
+        <button onclick="enviarMensagem()">Enviar Mensagem</button>
+      </div>
+
+      <div class="box">
+        <h3>Regra de 3</h3>
+        <input type="number" placeholder="Valor A">
+        <input type="number" placeholder="Valor B">
+        <input type="number" placeholder="Valor X">
+        <button>Calcular</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card" id="card1">
+        <img src="imagens/casa1.jfif" alt="Casa 1" class="zoom-on-load">
+        <button class="open-modal" data-img="imagens/casa1.jfif">Abrir imagem</button>
+        <button onclick="baixarImagem('card1')">Baixar imagem</button>
+      </div>
+      <div class="card">
+        <img src="imagens/casa2.jfif" alt="Casa 2" class="zoom-on-load">
+        <button class="open-modal" data-img="imagens/casa2.jfif">Abrir imagem</button>
+      </div>
+      <div class="card">
+        <img src="imagens/casa3.jfif" alt="Casa 3" class="zoom-on-load">
+        <button class="open-modal" data-img="imagens/casa3.jfif">Abrir imagem</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="#">Termos</a> |
+      <a href="#">Contato</a> |
+      <a href="#">Sobre</a>
+    </p>
+    <p>&copy; Copyright 2022. Todos os direitos reservados. Imóvel Guide</p>
+  </footer>
+
+
+
+  <div class="modal" id="imgModal">
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Imagem ampliada">
+      <br>
+      <button class="modal-close" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+
+
+
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("modalImage");
+
+    document.querySelectorAll(".open-modal").forEach(button => {
+      button.addEventListener("click", () => {
+        const imgSrc = button.getAttribute("data-img");
+        modalImg.src = imgSrc;
+        modal.style.display = "flex";
+      });
+    });
+
+    function closeModal() {
+      modal.style.display = "none";
+      modalImg.src = "";
+    }
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+
+
+    document.getElementById("cpfInput").addEventListener("input", function(e) {
+      let v = e.target.value.replace(/\D/g, "");
+      if (v.length > 11) v = v.slice(0, 11);
+      v = v.replace(/(\d{3})(\d)/, "$1.$2");
+      v = v.replace(/(\d{3})(\d)/, "$1.$2");
+      v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      e.target.value = v;
+    });
+
+
+    document.getElementById("telInput").addEventListener("input", function(e) {
+      let v = e.target.value.replace(/\D/g, "");
+      if (v.length > 11) v = v.slice(0, 11);
+      v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+      v = v.replace(/(\d{5})(\d)/, "$1-$2");
+      e.target.value = v;
+    });
+
+  
+    function enviarMensagem() {
+      alert("Mensagem enviada com sucesso!");
+    }
+
+    
+    window.addEventListener("load", () => {
+      document.querySelectorAll("img").forEach(img => {
+        img.classList.add("zoom-on-load");
+      });
+    });
+
+
+    function baixarImagem(id) {
+      const element = document.getElementById(id);
+      html2canvas(element).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'imagem-card.png';
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
